@@ -1,0 +1,101 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>登录页面</title>
+    <link rel="stylesheet" type="text/css" href="../static/content/bootstrap.css" />
+    <script type="text/javascript" src="../static/scripts/bootstrap.js"></script>
+    <script type="text/javascript" src="../static/scripts/jquery-1.10.2.js"></script>
+</head>
+<body style="background:url(../static/index_bg.jpg) no-repeat;background-size:100% 100%;background-attachment: fixed;">
+    <div style="width:40%;margin:auto;margin-top:30px;">
+        <div style="margin-top:5px;">
+            <ul class="nav nav-pills">
+                <li><a id="login_btn" href="#">登录</a></li>
+                <li><a id="register_btn" href="#">注册</a></li>
+            </ul>
+        </div>
+        <div id="login" style="height:500px;border:solid #E6E6E6 2px;">
+            <div style=" width: 50%; margin: auto;">
+                <form action="/login" method="post">
+                    <div class="input-group" style="padding-top: 50px;">
+                        <span class="input-group-addon">身份选择</span>
+                        <select name="identity" class="form-control">
+                            <option value="customer">客户</option>
+                            <option value="manager">管理员</option>
+                        </select>
+                    </div>
+                    <div class="input-group" style="padding-top: 50px;">
+                        <span class="input-group-addon">手机号码</span>
+                        <input name="phoneNum" type="text" class="form-control">
+                    </div>
+                    <div class="input-group" style="padding-top: 50px; ">
+                        <span class="input-group-addon">登录密码</span>
+                        <input name="pwd" type="password" class="form-control">
+                    </div>
+                    <div style="padding-top:50px;">
+                        <button type="submit" class="btn btn-primary" style="width:100%;">登录</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div id="register" style="height: 600px; display: none; border: solid #E6E6E6 2px;">
+            <div style="width:50%;margin:auto;">
+                <form action="/register" method="post">
+                    <div class="input-group" style="padding-top:50px;">
+                        <span class="input-group-addon">&#12288;&#12288;昵称</span>
+                        <input name="alias" type="text" class="form-control">
+                    </div>
+                    <div class="input-group" style="padding-top:30px;">
+                        <span class="input-group-addon">&#12288;&#12288;姓名</span>
+                        <input name="username" type="text" class="form-control">
+                    </div>
+                    <div class="input-group" style="padding-top:30px;">
+                        <span class="input-group-addon">&#12288;&#12288;性别</span>
+                        <!--<input name="gender" type="text" class="form-control">-->
+                        <select name="gender" class="form-control">
+                            <option value="男">男</option>
+                            <option value="女">女</option>
+                        </select>
+                    </div>
+                    <div class="input-group" style="padding-top:30px;">
+                        <span class="input-group-addon">&#12288;&#12288;年龄</span>
+                        <input name="age" type="text" class="form-control">
+                    </div>
+                    <div class="input-group" style="padding-top:30px;">
+                        <span class="input-group-addon">手机号码</span>
+                        <input name="phoneNum" type="text" class="form-control">
+                    </div>
+                    <div class="input-group" style="padding-top:30px;">
+                        <span class="input-group-addon">登录密码</span>
+                        <input name="pwd" type="password" class="form-control">
+                    </div>
+                    <div class="input-group" style="padding-top:30px;">
+                        <span class="input-group-addon">确认密码</span>
+                        <input name="pwd1" type="password" class="form-control">
+                    </div>
+                    <div style="padding-top:50px;">
+                        <button type="submit" class="btn btn-primary" style="width:100%;">确认注册</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script>
+        {% if message %}
+            alert("{{message}}")
+        {% endif %}
+        $(document).ready(function(){
+            $('#login_btn').click(function () {
+                $('#login').show();
+                $('#register').hide();
+            });
+            $('#register_btn').click(function () {
+                $('#login').hide();
+                $('#register').show();
+            });
+        });   
+    </script>
+</body>
+</html>

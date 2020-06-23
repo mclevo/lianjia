@@ -1,0 +1,53 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>预约信息管理</title>
+    <script type="text/javascript" src="../static/scripts/jquery-1.10.2.js"></script>
+    <link rel="stylesheet" type="text/css" href="../static/content/bootstrap.css" />
+    <script type="text/javascript" src="../static/scripts/bootstrap.js"></script>
+</head>
+<body>
+    <div style="width:100%;height:35px;background-color:black;">
+        <div style="width:80%;height:100%;margin:auto;">
+            <div style="font-size:30px;font-weight:700;color:white;float:left;line-height:35px;">恋家</div>
+            <div style="font-size:20px;float:left;color:white;margin-left:20px;line-height:40px;">好屋租赁</div>
+            <div style="font-size:14px;float:left;color:white;margin-left:40px;line-height:40px;">
+                <a href="/manage_house" style="color:white;text-decoration: none;">房源管理</a>
+            </div>
+            <div style="font-size:14px;float:left;color:white;margin-left:20px;line-height:40px;">
+                <a href="/manage_userInfo" style="color:white;text-decoration: none;">用户管理</a>
+            </div>
+            <div style="font-size:14px;float:left;color:white;margin-left:20px;line-height:40px;">
+                <a href="/getReserve" style="color:white;text-decoration: none;">预约管理</a>
+            </div>
+            <div style="font-size:14px;float:left;color:white;margin-left:20px;line-height:40px;">
+                <a href="/getComplaint" style="color:white;text-decoration: none;">用户投诉</a>
+            </div>
+            <div style="float:right;color:white;margin-right:10%;line-height:35px;">
+                <a href="#" style="color:white; text-decoration: none;">{{session['username']}}</a>
+                <a href="/login" style="color:white; text-decoration: none; margin-left:10px">退出登录</a>
+            </div>
+        </div>
+    </div>
+    <div style="width:60%;background-color:white;height:auto; margin:auto;margin-top:20px;">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>用户号码</th>
+                    <th>房源ID</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for reserve in reserveInfos %}
+                <tr>
+                    <td>{{ reserve[0] }}</td>
+                    <td>{{ reserve[1] }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

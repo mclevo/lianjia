@@ -1,0 +1,53 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>用户信息修改页面</title>
+    <link rel="stylesheet" type="text/css" href="../static/content/bootstrap.css" />
+    <script type="text/javascript" src="../static/scripts/bootstrap.js"></script>
+    <script type="text/javascript" src="../static/scripts/jquery-1.10.2.js"></script>
+</head>
+<body>
+    <div style="width:40%;margin:auto;margin-top:30px;">
+        <h3 style="text-align:center;">用户信息修改</h3>
+        <div id="modifyUserInfo" style="height:600px;border:solid #E6E6E6 2px;">
+            <div style="width:50%;margin:auto;">
+                <form action="/modifyUserInfo" method="post">
+                    <div class="input-group" style="padding-top:80px;">
+                        <span class="input-group-addon">&#12288;&#12288;昵称</span>
+                        <input name="alias" type="text" class="form-control" value="{{userInfo[4]}}">
+                    </div>
+                    <div class="input-group" style="padding-top:50px;">
+                        <span class="input-group-addon">&#12288;&#12288;姓名</span>
+                        <input name="username" type="text" class="form-control" value="{{userInfo[1]}}">
+                    </div>
+                    <div class="input-group" style="padding-top:50px;">
+                        <span class="input-group-addon">&#12288;&#12288;性别</span>
+                        <select name="gender" class="form-control">
+                            {% if userInfo[2] == '男' %}
+                            <option value="男" selected>男</option>
+                            <option value="女">女</option>
+                            {% else %}
+                            <option value="男">男</option>
+                            <option value="女" selected>女</option>
+                            {% endif %}
+                        </select>
+                    </div>
+                    <div class="input-group" style="padding-top:50px;">
+                        <span class="input-group-addon">&#12288;&#12288;年龄</span>
+                        <input name="age" type="text" class="form-control" value="{{userInfo[3]}}">
+                    </div>
+                    <div class="input-group" style="padding-top:50px;">
+                        <span class="input-group-addon">登录密码</span>
+                        <input name="pwd" type="text" class="form-control" value="{{session['password']}}">
+                    </div>
+                    <div style="padding-top:50px;">
+                        <button type="submit" class="btn btn-primary" style="width:100%;">确认修改</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

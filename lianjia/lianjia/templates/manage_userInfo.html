@@ -1,0 +1,169 @@
+﻿{% block content %}
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>用户信息管理</title>
+    <script type="text/javascript" src="../static/scripts/jquery-1.10.2.js"></script>
+    <link rel="stylesheet" type="text/css" href="../static/content/bootstrap.css" />
+    <script type="text/javascript" src="../static/scripts/bootstrap.js"></script>
+
+</head>
+<body>
+    <div style="width:100%;height:35px;background-color:black;">
+        <div style="width:80%;height:100%;margin:auto;">
+            <div style="font-size:30px;font-weight:700;color:white;float:left;line-height:35px;">恋家</div>
+            <div style="font-size:20px;float:left;color:white;margin-left:20px;line-height:40px;">好屋租赁</div>
+            <div style="font-size:14px;float:left;color:white;margin-left:40px;line-height:40px;">
+                <a href="/manage_house" style="color:white;text-decoration: none;">房源管理</a>
+            </div>
+            <div style="font-size:14px;float:left;color:white;margin-left:20px;line-height:40px;">
+                <a href="/manage_userInfo" style="color:white;text-decoration: none;">用户管理</a>
+            </div>
+            <div style="font-size:14px;float:left;color:white;margin-left:20px;line-height:40px;">
+                <a href="/getReserve" style="color:white;text-decoration: none;">预约管理</a>
+            </div>
+            <div style="font-size:14px;float:left;color:white;margin-left:20px;line-height:40px;">
+                <a href="/getComplaint" style="color:white;text-decoration: none;">用户投诉</a>
+            </div>
+            <div style="float:right;color:white;margin-right:10%;line-height:35px;">
+                <a href="#" style="color:white; text-decoration: none;">{{session['username']}}</a>
+                <a href="/login" style="color:white; text-decoration: none; margin-left:10px">退出登录</a>
+            </div>
+        </div>
+    </div>
+    <div style="width:60%;background-color:white;height:auto; margin:auto;margin-top:20px;">
+        <button class="btn btn-primary" style="float:right;" data-toggle="modal" data-target="#add">添加用户</button>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>昵称</th>
+                    <th>姓名</th>
+                    <th>用户号码</th>
+                    <th>性别</th>
+                    <th>年龄</th>
+                    <th>信息修改</th>
+                    <th>删除用户</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in userInfos %}
+                <tr>
+                    <td>{{ user[5] }}</td>
+                    <td>{{ user[1] }}</td>
+                    <td>{{ user[0] }}</td>
+                    <td>{{ user[3] }}</td>
+                    <td>{{ user[4] }}</td>
+                    <td><button class="btn" data-toggle="modal" data-target="#modify" onclick="setValues('{{ user[5] }}','{{ user[1] }}','{{ user[0] }}','{{ user[3] }}','{{ user[4] }}')">修改</button></td>
+                    <td><button class="btn" onclick="delUser('{{ user[0] }}')">删除</button></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="modal fade" id="add" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title" id="myModalLabel">添加用户</h4>
+                </div>
+                <form action="/addUser" method="post">
+                    <div class="modal-body" style="width:60%;margin:auto;">
+                        <div class="input-group" style="padding-top:10px;">
+                            <span class="input-group-addon">&#12288;&#12288;昵称</span>
+                            <input name="alias" type="text" class="form-control" value="">
+                        </div>
+                        <div class="input-group" style="padding-top:10px;">
+                            <span class="input-group-addon">&#12288;&#12288;姓名</span>
+                            <input name="username" type="text" class="form-control" value="">
+                        </div>
+                        <div class="input-group" style="padding-top:30px;">
+                            <span class="input-group-addon">&#12288;&#12288;性别</span>
+                            <select name="gender" class="form-control">
+                                <option value="男">男</option>
+                                <option value="女">女</option>
+                            </select>
+                        </div>
+                        <div class="input-group" style="padding-top:30px;">
+                            <span class="input-group-addon">&#12288;&#12288;年龄</span>
+                            <input name="age" type="text" class="form-control" value="">
+                        </div>
+                        <div class="input-group" style="padding-top:30px;">
+                            <span class="input-group-addon">手机号码</span>
+                            <input name="phoneNum" type="text" class="form-control" value="">
+                        </div>
+                        <div class="input-group" style="padding-top:30px;">
+                            <span class="input-group-addon">登录密码</span>
+                            <input name="pwd" type="text" class="form-control" value="">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                        <button type="submit" class="btn btn-primary">确认添加</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="modify" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title" id="myModalLabel">修改用户信息</h4>
+                </div>
+                <form action="/modifyUser" method="post">
+                    <div class="modal-body" style="width:60%;margin:auto;">
+                        <div class="input-group" style="padding-top:10px;">
+                            <span class="input-group-addon">&#12288;&#12288;昵称</span>
+                            <input id="m_alias" name="m_alias" type="text" class="form-control" value="">
+                        </div>
+                        <div class="input-group" style="padding-top:10px;">
+                            <span class="input-group-addon">&#12288;&#12288;姓名</span>
+                            <input id="m_username" name="m_username" type="text" class="form-control">
+                        </div>
+                        <div class="input-group" style="padding-top:10px;">
+                            <span class="input-group-addon">&#12288;&#12288;性别</span>
+                            <select id="m_gender" name="m_gender" class="form-control">
+                                <option value="男">男</option>
+                                <option value="女">女</option>
+                            </select>
+                        </div>
+                        <div class="input-group" style="padding-top:10px;">
+                            <span class="input-group-addon">&#12288;&#12288;年龄</span>
+                            <input id="m_age" name="m_age" type="text" class="form-control">
+                        </div>
+                        <input id="m_phoneNum" name="m_phoneNum" type="hidden" class="form-control">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                        <button type="submit" class="btn btn-primary">确认修改</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div>
+        <form id="delUser" action="/delUser" method="post">
+            <input type="hidden" id="d_phoneNum" name="d_phoneNum"/>
+        </form>
+    </div>
+    <script>
+        function setValues(alias, username, phoneNum, gender, age) {
+            $('#m_alias').val(alias);
+            $('#m_username').val(username);
+            $('#m_phoneNum').val(phoneNum);
+            $('#m_gender').val(gender);
+            $('#m_age').val(age);
+        };
+
+        function delUser(phone_num) {
+            $('#d_phoneNum').val(phone_num);
+            $('#delUser').submit();
+        }
+    </script>
+</body>
+</html>
+{% endblock %}

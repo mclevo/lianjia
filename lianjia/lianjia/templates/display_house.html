@@ -1,0 +1,220 @@
+﻿{% block content %}
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>房源展示</title>
+    <script type="text/javascript" src="../static/scripts/jquery-1.10.2.js"></script>
+    <link rel="stylesheet" type="text/css" href="../static/content/bootstrap.css" />
+    <script type="text/javascript" src="../static/scripts/bootstrap.js"></script>
+</head>
+<body style="background-color:white;">
+    <div style="width:100%;height:35px;background-color:black;">
+        <div style="width:80%;height:100%;margin:auto;">
+            <div style="font-size:30px;font-weight:700;color:white;float:left;line-height:35px;">恋家</div>
+            <div style="font-size:20px;float:left;color:white;margin-left:20px;line-height:40px;">好屋租赁</div>
+            <div style="float:right;color:white;margin-right:10%;line-height:35px;">
+                <a href="/modifyUserInfo" style="color:white; text-decoration: none;">{{session['username']}}</a>
+                <a href="#" style="color:white; text-decoration: none;margin-left:20px" data-toggle="modal" data-target="#complaint">投诉</a>
+                <a href="/login" style="color:white; text-decoration: none; margin-left:10px">退出登录</a>
+            </div>
+        </div>
+    </div>
+    <div style="width:60%;height:200px;margin-left:15%;margin-top:30px;">
+        <div id="area" style="width:100%;height:40px;margin-top:15px;line-height:40px;" value="">
+            <div style="font-size:14px;font-weight:700;float:left;">区域</div>
+            <div style="font-size:14px;font-weight:700;color:white;float:left;margin-left:20px;">
+                <a href="#" style="color:green; text-decoration: none;" value="" onclick="changeColor(this,'area')">不限</a>
+            </div>
+            {% for area in areas %}
+            <div style="font-size:14px;font-weight:500;float:left;margin-left:20px;">
+                <a href="#" style="color:black;text-decoration: none;" value=" area='{{ area[0] }}' " onclick="changeColor(this,'area')">{{ area[0] }}</a>
+            </div>
+            {% endfor %}
+        </div>
+        <div id="rent_way" style="width:100%;height:40px;margin-top:15px;line-height:40px;" value="">
+            <div style="font-size:14px;font-weight:700;float:left;">方式</div>
+            <div style="font-size:14px;font-weight:700;float:left;margin-left:20px;">
+                <a href="#" style="color:green; text-decoration: none;" value="" onclick="changeColor(this,'rent_way')">不限</a>
+            </div>
+            <div style="font-size:14px;font-weight:500;float:left;margin-left:20px;">
+                <a href="#" style="color:black;text-decoration: none;" value=" rent_way='整租' " onclick="changeColor(this,'rent_way')">整租</a>
+            </div>
+            <div style="font-size:14px;font-weight:500;float:left;margin-left:20px;">
+                <a href="#" style="color:black;text-decoration: none;" value=" rent_way='合租' " onclick="changeColor(this,'rent_way')">合租</a>
+            </div>
+        </div>
+        <div id="price" style="width:100%;height:40px;margin-top:15px;line-height:40px;" value="">
+
+            <div style="font-size:14px;font-weight:700;float:left;">
+                租金
+            </div>
+            <div style="font-size:14px;font-weight:700;float:left;margin-left:20px;">
+                <a href="#" style="color:green; text-decoration: none;" value="" onclick="changeColor(this,'price')">不限</a>
+            </div>
+            <div style="font-size:14px;font-weight:500;float:left;margin-left:20px;">
+                <a href="#" style="color:black; text-decoration: none;" value=" price<=1000 " onclick="changeColor(this,'price')">≤1000元</a>
+            </div>
+            <div style="font-size:14px;font-weight:500;float:left;margin-left:20px;">
+                <a href="#" style="color:black; text-decoration: none;" value=" price>=1000 and price <=1500 " onclick="changeColor(this,'price')">1000-1500元</a>
+            </div>
+            <div style="font-size:14px;font-weight:500;float:left;margin-left:20px;">
+                <a href="#" style="color:black; text-decoration: none;" value=" price>=1500 and price <=2000 " onclick="changeColor(this,'price')">1500-2000元</a>
+            </div>
+            <div style="font-size:14px;font-weight:500;float:left;margin-left:20px;">
+                <a href="#" style="color:black; text-decoration: none;" value=" price>=2000 and price <=3000 " onclick="changeColor(this,'price')">2000-3000元</a>
+            </div>
+            <div style="font-size:14px;font-weight:500;float:left;margin-left:20px;">
+                <a href="#" style="color:black; text-decoration: none;" value=" price>=3000 and price <=4500 " onclick="changeColor(this,'price')">3000-4500元</a>
+            </div>
+            <div style="font-size:14px;font-weight:500;float:left;margin-left:20px;">
+                <a href="#" style="color:black; text-decoration: none;" value=" price>=4500 " onclick="changeColor(this,'price')">≥4500元</a>
+            </div>
+        </div>
+        <div id="direction" style="width:100%;height:40px;margin-top:15px;line-height:40px;" value="">
+            <div style="font-size:14px;font-weight:700;float:left;">
+                朝向
+            </div>
+            <div style="font-size:14px;font-weight:700;float:left;margin-left:20px;">
+                <a href="#" style="color:green; text-decoration: none;" value="" onclick="changeColor(this,'direction')">不限</a>
+            </div>
+            <div style="font-size:14px;font-weight:500;float:left;">
+                <a href="#" style="color:black; text-decoration: none;margin-left:20px;" value="direction='东'" onclick="changeColor(this,'direction')">东</a>
+            </div>
+            <div style="font-size:14px;font-weight:500;float:left;">
+                <a href="#" style="color:black; text-decoration: none;margin-left:20px;" value="direction='南'" onclick="changeColor(this,'direction')">南</a>
+            </div>
+            <div style="font-size:14px;font-weight:500;float:left;">
+                <a href="#" style="color:black; text-decoration: none;margin-left:20px;" value="direction='西'" onclick="changeColor(this,'direction')">西</a>
+            </div>
+            <div style="font-size:14px;font-weight:500;float:left;">
+                <a href="#" style="color:black; text-decoration: none;margin-left:20px;" value="direction='北'" onclick="changeColor(this,'direction')">北</a>
+            </div>
+        </div>
+    </div>
+    <div style="width:13%;height:auto;margin-top:100px;float:right;margin-right:80px;">
+        <div style="font-size:20px;font-weight:600;float:left;margin-bottom:30px;">热门房源</div>
+        {% for houseInfo in hotHouse_list %}
+        <div style="width:100%;height:200px;float:left;padding-bottom:5px;margin-bottom:20px;">
+            <a href="/display_house_detail?id={{houseInfo[0]}}" target="_blank" style="color:black; text-decoration: none;">
+                <img src="../static/images/{{houseInfo[0]}}/1.jpg" style="width:100%;height:70%;border-radius:3px;" />
+                <div style="font-size:12px;font-weight:500;">{{houseInfo[1]}}</div>
+                <div style="font-size:12px;font-weight:500;">{{houseInfo[2]}} / {{houseInfo[6]}}</div>
+                <div style="font-size:12px;font-weight:500;color:red;">{{houseInfo[7]}}元/月</div>
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+    <div id="house" style="width:60%;background-color:white;height:auto; margin-left:15%;margin-top:20px;">
+        {% for houseInfo in houseInfo_list %}
+        <div style="width:100%;height:150px;border-bottom:solid gray 1px;">
+
+            <div style="width:20%;height:80%;float:left;padding-top:15px;">
+                <a href="/display_house_detail?id={{houseInfo[0]}}" target="_blank"><img src="../static/images/{{houseInfo[0]}}/1.jpg" style="width:100%;height:100%;border-radius:5px;" /></a>
+            </div>
+            <div style="width: 60%; height: 100%; float: left; ">
+                <div style="height:auto;margin-left:10%;"><h3><a href="/display_house_detail?id={{houseInfo[0]}}" target="_blank" style="color:black; text-decoration: none;">{{houseInfo[1]}}</a></h3></div>
+                <div style="height:auto;margin-left:10%;"><p4>{{houseInfo[3]}} / {{houseInfo[4]}} / {{houseInfo[5]}} / {{houseInfo[6]}}</p4></div>
+            </div>
+            <div style="width:20%;height:100%;float:left;">
+                <div style="height:auto;margin-left:10%;"><h2 style="color:red;">{{houseInfo[7]}}元/月</h2></div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <div class="modal fade" id="complaint" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title" id="myModalLabel">用户投诉</h4>
+                </div>
+                <form action="/complaint" method="post">
+                    <div class="modal-body" style="width:80%;margin:auto;">
+                        <textarea id="words" name="words" class="form-control" rows="5"></textarea>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                        <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="complaint()" >确认提交</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script>
+        function changeColor(witch, ids) {
+            id = "#" + ids + " a"
+            var links = $(id);
+            var len = links.length;
+            for (var i = 0; i < len; i++) {
+                $(links[i]).css('color', 'black');
+            }
+            $(witch).css('color', 'green');
+            $('#' + ids).attr('value', $(witch).attr('value'))
+            var area = $('#area').attr('value');
+            var rent_way = $('#rent_way').attr('value');
+            var price = $('#price').attr('value');
+            var direction = $('#direction').attr('value');
+            console.log(area, rent_way, price, direction);
+            $.ajax({
+                type: 'post',
+                url: '/select_house',
+                dataType: 'json',
+                data: {
+                    areas: area,
+                    rent_ways: rent_way,
+                    prices: price,
+                    directions: direction
+                },
+                success: function (data) {
+                    $('#house').children().remove();
+                    for (i in data) {
+                        $('#house').append(
+                            '<div style="width:100%;height:150px;border-bottom:solid gray 1px;">' +
+                            '<div style="width:20%;height:80%;float:left;padding-top:15px;">' +
+                            '<a href="/display_house_detail?id=' + data[i][0] + '" target="_blank"><img src="../static/images/' + data[i][0] + '/1.jpg" style="width:100%;height:100%;border-radius:5px;" /></a>' +
+                            '</div>' +
+                            '<div style="width: 60%; height: 100%; float: left; ">' +
+                            '<div style="height:auto;margin-left:10%;"><h3><a href="/display_house_detail?id=' + data[i][0] + '" target="_blank" style="color:black; text-decoration: none;">' + data[i][1] + '</a></h3></div>' +
+                            '<div style="height:auto;margin-left:10%;"><p4>' + data[i][3] + ' / ' + data[i][4] + ' / ' + data[i][5] + ' / ' + data[i][6] + '</p4></div>' +
+                            '</div>' +
+                            '<div style="width:20%;height:100%;float:left;">' +
+                            '<div style="height:auto;margin-left:10%;"><h2 style="color:red;">' + data[i][7] + '元/月</h2></div>' +
+                            '</div>' +
+                            '</div>'
+                        );
+                    }
+                },
+                error: function (data) {
+                    console.log(data);
+                }
+            });
+        }
+
+        function complaint() {
+            var word = $('#words').val();
+            $.ajax({
+                type: 'post',
+                url: '/complaint',
+                dataType: 'json',
+                data: {
+                    words: word
+                },
+                success: function (data) {
+                    alert(data);
+                },
+                error: function (data) {
+                    console.log(data);
+                }
+            });
+        };
+
+        $(document).ready(function () {
+
+        });
+    </script>
+</body>
+</html>
+{% endblock %}

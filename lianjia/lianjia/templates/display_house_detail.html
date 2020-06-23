@@ -1,0 +1,377 @@
+﻿{% block content %}
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>房源详细信息</title>
+    <script type="text/javascript" src="../static/scripts/jquery-1.10.2.js"></script>
+    <link rel="stylesheet" type="text/css" href="../static/content/bootstrap.css" />
+    <script type="text/javascript" src="../static/scripts/bootstrap.js"></script>
+</head>
+<body style="background-color:white;">
+    <div style="width:100%;height:35px;background-color:black;">
+        <div style="width:80%;height:100%;margin:auto;">
+            <div style="font-size:30px;font-weight:700;color:white;float:left;line-height:35px;">恋家</div>
+            <div style="font-size:20px;float:left;color:white;margin-left:20px;line-height:40px;">好屋租赁</div>
+            <div style="float:right;color:white;margin-right:10%;line-height:35px;">
+                <a href="/modifyUserInfo" style="color:white; text-decoration: none;">{{session['username']}}</a>
+                <a href="#" style="color:white; text-decoration: none;margin-left:20px" data-toggle="modal" data-target="#complaint">投诉</a>
+                <a href="/login" style="color:white; text-decoration: none; margin-left:10px">退出登录</a>
+            </div>
+        </div>
+    </div>
+    <div style="width:80%;background-color:white;height:700px; margin:auto;margin-top:20px;">
+        <div style="width:100%;height:120px;">
+            <div style="font-size:30px;font-weight:700">{{detailInfo[1]}}</div>
+            <div style="font-size:15px;color:grey;margin-top:10px;">房源上架时间：{{detailInfo[3]}}</div>
+            <div style="font-size:15px;color:grey;margin-top:10px;">房源编号：{{detailInfo[0]}}</div>
+        </div>
+        <div style="width:100%;height:400px;">
+            <div style="width:52%;height:100%;float:left;border:solid #E6E6E6 1px;">
+                <div style="width:100%;height:100%;">
+                    <a href="#">
+                        <divs id="turn_left" style="width:5%;height:100%;background-color:dimgrey;float:left;line-height:400px;text-align:center;"><</divs>
+                    </a>
+                    {%for i in range(1, detailInfo[16]+1)%}
+                    <img class="image" src="../static/images/{{detailInfo[0]}}/{{i}}.jpg" style="width:90%;height:100%;float:left;display:none;" />
+                    {%endfor%}
+                    <a href="#">
+                        <divs id="turn_right" style="width:5%;height:100%;background-color:dimgrey;float:left;line-height:400px;text-align:center;">></divs>
+                    </a>
+                </div>
+            </div>
+            <div style="width:44%;height:100%;float:left;margin-left:2%;border:solid #E6E6E6 1px;">
+                <div style="width:80%;height:50px;margin:auto;border-bottom:solid #E6E6E6 1px;">
+                    <h1 style="color:red;">{{detailInfo[2]}}元/月</h1>
+                </div>
+                <div style="width:80%;height:100px;margin:auto;border-bottom:solid #E6E6E6 1px;">
+                    <div style="font-size:15px;margin-top:10px;">租赁方式：{{detailInfo[4]}}</div>
+                    <div style="font-size:15px;margin-top:10px;">房屋类型：{{detailInfo[5]}}</div>
+                    <div style="font-size:15px;margin-top:10px;">朝向楼层：{{detailInfo[6]}}</div>
+                </div>
+                <div style="width:80%;height:30px;margin:auto;margin-top:20px; border-bottom:solid #E6E6E6 1px;">
+                    <a href="#" style="color:gray; text-decoration: none;">
+                        <div style="width:100px;height:30px;float:left;text-align:center;line-height:30px;" data-toggle="modal" data-target="#before_rent">
+                            租前须知
+                        </div>
+                    </a>
+                    <a href="#" style=" color: gray;text-decoration: none;" data-toggle="modal" data-target="#about_us">
+                        <div style="width:100px;height:30px;float:left;text-align:center;line-height:30px;">
+                            关于我们
+                        </div>
+                    </a>
+                </div>
+                <div style="width:80%;height:100px;margin:auto;border-bottom:solid #E6E6E6 1px;margin-top:10px;">
+                    <a href="#" style="color:black; text-decoration: none;">
+                        <div id="reserve" style="width:45%;height:50px;background-color:green;float:left;border-radius:4px;text-align:center;line-height:50px;" onclick="reserve('{{session["phoneNum"]}}','{{detailInfo[0]}}')">
+                            预约看房
+                        </div>
+                    </a>
+                    <a href="#" style="color:black; text-decoration: none;">
+                        <div style="width:45%;height:50px;background-color:darkseagreen;float:left;margin-left:20px;border-radius:4px;text-align:center;line-height:50px;">
+                            在线咨询 : 1010 9666
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div style="margin-top:20px;width:99%;">
+            <div style="font-size:25px;font-weight:700">详细信息</div>
+            <div style="margin-top:20px;width:100%;height:100px;border:solid #E6E6E6 1px;">
+                <div style="float:left;">
+                    <div style="float:left;height:30px;width:150px;line-height:30px;">面积：{{detailInfo[7]}}</div>
+                    <div style="float:left;height:30px;width:150px;line-height:30px;">楼层：{{detailInfo[8]}}</div>
+                    <div style="float:left;height:30px;width:150px;line-height:30px;">车位：{{detailInfo[9]}}</div>
+                    <div style="float:left;height:30px;width:150px;line-height:30px;">用电：{{detailInfo[10]}}</div>
+                    <div style="float:left;height:30px;width:150px;line-height:30px;">采暖：{{detailInfo[11]}}</div>
+                </div>
+                <div style="float:left;margin-top:10px;">
+                    <div style="float:left;height:30px;width:150px;line-height:30px;">入住：{{detailInfo[12]}}</div>
+                    <div style="float:left;height:30px;width:150px;line-height:30px;">电梯：{{detailInfo[13]}}</div>
+                    <div style="float:left;height:30px;width:150px;line-height:30px;">用水：{{detailInfo[14]}}</div>
+                    <div style="float:left;height:30px;width:150px;line-height:30px;">燃气：{{detailInfo[15]}}</div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="before_rent" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog" style="width:70%;">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="myModalLabel">租前须知</h4>
+                    </div>
+                    <div class="modal-body" style="width:100%;margin:auto;">
+                        <p>
+                            恋家网隐私保护协议<br />
+                            隐私权是用户的重要权利，对于恋家网的所有用户，我们均会以负责的态度对待您的个人信息，特此制定恋家网（http://www.lianjia.com，以下称"本网站"）对用户相关信息所采取的收集、使用和保护政策。恋家网隐私保护声明系本网站保护用户个人隐私的公告和承诺，请您务必仔细阅读<br />
+
+                            一、用户非个人信息<br />
+
+                            我们将通过您的IP地址来收集非个人化的信息，例如用户的浏览器性质、操作系统种类、给您提供接入服务的ISP域名、您访问本网的顺序和链接途径、您访问时所在的地理位置等。通过收集上述信息，我们将优化在您计算机屏幕上显示的页面，同时进行客流量统计、访问者阅读习惯整理等，从而改进本网站的管理和服务。这些无关个人身份的信息能帮助我们识别恋家网最受欢迎的地区和内容等，并帮助我们确定推广活动的有效性。<br />
+
+                            二、用户个人信息<br />
+
+                            1、当您在恋家网进行用户注册登记、回答问题、发布评论等各种活动时，在您的同意并确认下，本网站将通过注册表格等形式要求您提供一些个人信息。这些个人信息包括：<br />
+
+                            （1）个人识别资料：如姓名、性别、年龄、出生日期、身份证号码（或护照号码）、座机/手机、通信地址、住址、电子邮件地址等信息。<br />
+
+                            （2）个人背景：职业、教育程度、收入状况、婚姻状况、家庭状况、兴趣爱好等。<br />
+
+                            2、请了解，在未经您同意并确认之前，本网站不会将您提供的信息用于其它目的。惟按下列第八章规定应政府及法律相关要求披露时不在此限。恋家网的目标是向所有用户提供愉快、有益的上网经历，并使每个用户使用恋家网相关服务时能够更容易、更满意，而收集这些个人信息有助于我们实现这一目标。所有的注册成员和访问者都应该知道，当他们在公告栏、聊天室或其他网上公开场合披露其个人信息时，该信息可能会被他人收集并使用，包括用来向该用户发送未经邀约的电子邮件等广告信息。<br />
+
+                            三、用户权利<br />
+
+                            1、本网站用户对于自己的个人信息享有以下权利：<br />
+
+                            （1）随时查询及请求阅览；<br />
+
+                            （2）随时请求补充或更正；<br />
+
+                            （3）随时请求删除；<br />
+
+                            （4）请求停止电脑处理及使用。<br />
+
+                            2、本网站为用户提供各种配套服务，如看房团、团购等各项活动，我们通常要求参与者填写相关资料登记表格，以便活动更好的开展。此类信息也将成为本网用户数据的一部分，并将被后续记录、保存、保护和合理使用。是否提供所要求的信息和是否参加此类活动，这完全取决于用户自身。<br />
+
+                            3、针对以上权利，本网站为您提供相关服务，如用户有任何建议或意见，请发送电子邮件至app@lianjia.com。<br />
+
+                            四、用户信息安全保护<br />
+
+                            1、本网站将严格保护您的个人信息安全，对您所提供的信息采取严密的管理及保护措施。我们将采用相应的安全技术和程序来防止您的个人信息丢失、被盗用或遭篡改，并且保护您的个人信息不被未经授权者访问、使用或泄漏。<br />
+
+                            2、本网站将在必要时委托专业技术人员代为对该类资料进行电脑处理，以符合专业分工之需求。如本网站将电脑处理之通知送达予您，而您未在通知规定的时间内主动明示反对，本网站将善意推定您已同意。此后您仍然有权按照上述第三章第1条第（4）款之规定，请求停止电脑处理<br />
+
+                            五、用户隐私自我保护<br />
+
+                            1、恋家网为您提供评论、问答等服务，并善意提醒所有用户，该区域为网络公开场合，在这些区域内，您公布的任何信息都有可能成为公开的信息。因此，本网提醒您，在这些区域公开您的个人信息之前请慎重考虑。<br />
+
+                            2、用户是唯一对自己的账号密码及其相关注册信息负有权限及保密责任的人。因此，当你在线时，请务必小心保护自己的账户安全。<br />
+
+                            六、未成年人隐私权的保护<br />
+
+                            1、本网站将建立相应合理程序，以保护未成年人个人信息的安全。本网站郑重声明：任何十六岁以下的未成年人参加网上活动应事先得到家长或其法定监护人（以下统称为“监护人”）的明确同意。<br />
+
+                            2、未经监护人同意，未成年人私自上网或者冒用成人名义上网的行为将可能缺乏与未成年人相应的信息安全保护措施。<br />
+
+                            3、监护人应承担保护未成年人相关网络隐私的首要责任。<br />
+
+                            4、本网站收集未成年人的个人信息，仅为更好服务于未成人特定要求的目的，相关资料仅作为保护未成年人参与网络活动时的安全之用，而不会保留这些信息做进一步或其他商业目的的使用。<br />
+
+                            5、未经监护人同意，本网站将不会使用未成年人的个人信息，亦不会向任何第三方披露或传送可识别该未成人的个人信息。惟按上述第六章规定应政府及法律相关要求披露时不在此限。<br />
+
+                            6、若经未成年人的监护人同意，本网站可对未成年人的个人信息进行收集，本网站将向监护人提供：<br />
+
+                            （1）审视其子女或被监护人相关信息的机会；<br />
+
+                            （2）拒绝其子女或被监护人相关个人信息被进一步收集或使用的可能；<br />
+
+                            （3）变更或删除其子女或被监护人个人信息。<br />
+
+                            7、监护人有权拒绝本网站与其子女或被监护人做进一步的联络。<br />
+
+                            七、用户信息使用原则惟在符合下列条件之一的情况下，本网站方可能对本网用户的个人信息进行必要范围之外的合理使用：<br />
+
+                            1、已取得您的书面同意；<br />
+
+                            2、为免除您在生命、身体或财产方面的紧急危险；<br />
+
+                            3、为防止他人权益的重大危害；<br />
+
+                            4、为增进公共利益，且无害于您的重大利益。<br />
+
+                            八、用户信息披露原则<br />
+
+                            1、根据中华人民共和国相关法律法规，当相关政府机关依照法定程序要求本网站披露相关个人信息时，本网站将根据执法单位之要求或为公共安全之目的提供相关资料。在此情况下对用户信息的任何披露，本网站均不承担任何责任。<br />
+
+                            2、其他恋家网因善意确信或合理原因有必要对相关用户信息进行披露的情形：<br />
+
+                            （1）根据恋家网服务协议或恋家网其他相关声明所列的条款，有必要进行相关信息公开的；<br />
+
+                            （2）在紧急的情况下，为保护恋家控股公司及恋家网用户的人身或财产安全的；<br />
+
+                            （3）为体现公平公正原则，需要对用户的部分信息进行公示的。<br />
+
+                            九、Cookies<br />
+
+                            1、Cookies是指一种技术，当使用者访问设有Cookies装置的本网站时，本网站的服务器会自动发送Cookies至用户浏览器内，并储存到其电脑硬盘内。此Cookies负责记录日后您到访本网站的种种活动、网络个人资料、浏览习惯等。<br />
+
+                            2、恋家网使用cookies仅为为所有用户提供更加周到的个性化服务之目的。运用Cookies技术，本网站能够知道哪些网页或内容受欢迎。此外，本网站将会运用Cookies追访您的喜好，使您在访问我们的网站时能够得到更周密更细致的良好服务。<br />
+
+                            3、cookies不会跟踪个人信息。当您注册成为我们网站会员时，恋家网会使用cookies。在这种情况下，会存储有用信息，使您再次访问我们的网站时可辨认您的身份，从而向您提供感兴趣的信息资料或储存账号密码等，以便您造访本网站时不必每次重复登录。<br />
+
+                            4、来自恋家网的cookies只能被恋家网读取。您可以选择接受或拒绝 Cookie。大多数网络浏览器会自动接受 Cookie，但您通常可根据自己的需要来修改浏览器的设置以拒绝 Cookie。如果您的浏览器被设置为拒绝cookies，您仍然能够访问我们的大多数网页，但是您可能无法完全体验恋家网全部的网络服务或本网站的特色互动功能。<br />
+
+                            十、免责除上述第八章规定的免责情形外，下列情况本网站亦毋需承担任何责任：<br />
+
+                            1、由于您将用户密码告知他人或与他人共享注册帐户，由此导致的任何个人信息泄露，或其他非因恋家网原因导致的个人信息泄漏；<br />
+
+                            2、任何由于黑客政击、计算机病毒侵入或发作、因政府管制而造成的暂时性关闭等影响网络正常经营之非恋家原因而造成的个人信息泄露、丢失、被盗用或被篡改等；<br />
+
+                            3、任何第三方根据恋家各服务声明及服务协议中所列明的情况使用您的个人信息，由此所产生的纠纷；<br />
+
+                            4、恋家网在各服务声明及服务协议中列明的所有免责情形；<br />
+
+                            5、恋家网的网页上有与其他网站网页的链接。恋家网对其他任何网站的内容、隐私政策、运营情况、或经营这些网站的公司的行为概不负责。在向这些与恋家网链接的网站提供个人信息之前，请查阅它们的隐私政策。由于与本网站链接的其它网站所造成的个人信息泄露及由此而导致的任何法律争议和后果，恋家网概不负责；<br />
+
+                            6、任何因不可抗力所导致的后果。<br />
+
+                            十一、相关法律<br />
+
+                            本声明未涉及的问题请参见国家有关法律法规，当本声明与国家有关法律法规冲突时，以国家法律法规为准。<br />
+
+                            十二、本网站相关声明版权及其修改权、更新权和最终解释权均属恋家网所有。<br />
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="about_us" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog" style="width:70%;">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="myModalLabel">关于我们</h4>
+                    </div>
+                    <div class="modal-body" style="width:100%;margin:auto;">
+                        <p>
+                            恋家简介<br />
+
+                            恋家，成立于2001年，是以数据驱动的全价值链房产服务平台。提供二手房、新房、租房、旅居房产、海外房产等房产交易服务，并拥有业内独有的房屋数据、人群数据、交易数据，以数据技术驱动服务品质及行业效率的提升。<br />
+
+                            经过15年的发展，恋家目前已进驻北京、上海、广州、深圳、天津、成都、青岛、重庆、大连等28个城市和地区，全国直营门店数量超8000家，旗下经纪人近15万人。<br />
+
+                            成立至今，恋家一直是行业引领者和颠覆者。业内率先承诺真实房源，全国真房源率已超过97%；并开展安心服务承诺，建立亿元保障金，保证消费者交易安全。<br />
+
+                            恋家是真正具备大数据处理能力的房产服务平台。历时8年，收集160多个城市1亿1000万套房屋信息，并建立业内独有的“楼盘字典”，为真房源奠定基础。通过对房屋数据、人群数据和交易数据的挖掘和处理，提供从找房到签约的各类线上产品，帮助提高交易效率，优化交易体验。<br />
+
+                            恋家还致力于搭建房产服务者生态平台，从经纪人招聘到培训，从服务标准制定到内部品质监控，都有严格的标准。从而让15万经纪人都能提供标准化的专业服务，让经纪人职业化。<br />
+
+                            恋家正积极拓展多业务。新房业务已覆盖25个城市，提供专业的新房咨询顾问服务。在海南等地，开创全新的旅居综合服务模式。海外业务已进驻美国、澳大利亚、新西兰等10个国家。并探索房产生态业务，建设家居综合服务平台。<br />
+
+                            未来五年，恋家会以互联网技术和数据化产品，进行线上线下的打通，重构和优化交易流程，不断提升交易体验。<br />
+
+                            数据驱动<br />
+
+                            ● 楼盘字典<br />
+
+                            恋家楼盘字典收录了包括房源房间门牌号、标准户型图、属性信息、配套设施信息、历史业务数据等多维度信息。囊括了全国160多个城市1亿1000万套房屋数据，从房源录入的第一步便智能判别真实房源，确保房源真实性。<br />
+
+                            2014年6月，恋家数据中心成立，2015年，基于恋家模型的楼盘字典V2.0开始迭代上线，为恋家的平台化战略提供了坚实的基础支撑。<br />
+
+                            目前，恋家数据中心由60余名楼盘数据管理工程师，管理1000余人的长期兼职团队及多家服务商，协调全国超过130000名经纪人，在恋家数据管理体系的框架下，逐步推进恋家的数据标准化建设。<br />
+
+                            ● 大数据分析与应用<br />
+
+                            用户画像&智能推荐：恋家通过对用户与网站的交互过程中产生的成交数据、带看数据、搜索和点击数据等大数据的分析，形成用户画像，预估用户中意房屋的类型并智能为其推荐符合其需求的房源、推荐熟悉该小区、好评率高的经纪人为其服务。<br />
+
+                            房产评价：恋家通过对历史成交数据的多维度分析来预测未来房价走势、评估房屋竞争力，帮助用户、业主和经纪人提供决策参考。<br />
+
+                            ● 技术团队：<br />
+
+                            目前整个恋家研发团队约500人，大部分来自于百度、阿里、腾讯、京东等知名互联网公司。主要包括Java、PHP、前端、移动端、测试、运维等多个团队。<br />
+
+                            行业价值：<br />
+
+                            ● 信息无差别分享：<br />
+
+                            恋家耗资近4亿建立了楼盘数据库，管理160多个城市1亿1000万套房屋数据，容量达到1200T。恋家基于楼盘数据库，不仅为客户提供透明房价，还提供房源历史成交数据、价格变动区间、房间户型图等所有帮助购房者有效决策的因素，依托互联网对数据进行标准化管理，实现信息的无差别共享，改变房产行业中信息不透明的状况，提高买卖双方效率。<br />
+
+                            ● 重构交易流程：<br />
+
+                            恋家通过发力移动互联网，多功能全渠道的产品矩阵大大增强了经纪人与客户之间的互动与互通，实现了房源、业主、客户和经纪人的高效关联。恋家通过分析客户找房期间的高频交互数据，呈现客户交易行为的特征与偏好，帮助客户具象化其需求，建立客户与房源的关系图谱，实现精准匹配。为用户提供从找房、看房、买房、过户等一条龙服务，剔除并重构交易场景中冗余、复杂的流程，实现用户体验和作业效率的双提升。<br />
+
+                            ● 全新的经纪人平台：<br />
+
+                            恋家通过互联网平台实现买方、卖方、经纪人的连接与互通，实现线上线下环环相扣，形成房产服务闭环，大大提高了房产经纪的成单效率。同时，恋家将通过制定了一系列标准化的服务流程和经纪人服务评价体系，打造一个强支持、强服务、强管控的全新的经纪人平台。<br />
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="complaint" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h4 class="modal-title" id="myModalLabel">用户投诉</h4>
+                    </div>
+                    <form action="/complaint" method="post">
+                        <div class="modal-body" style="width:80%;margin:auto;">
+                            <textarea class="form-control" rows="5"></textarea>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                            <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="complaint()">确认提交</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        function complaint() {
+            var word = $('#words').val();
+            $.ajax({
+                type: 'post',
+                url: '/complaint',
+                dataType: 'json',
+                data: {
+                    words: word
+                },
+                success: function (data) {
+                    alert(data);
+                },
+                error: function (data) {
+                    console.log(data);
+                }
+            });
+        };
+
+        function reserve(userPhoneNum, houseID) {
+            $.ajax({
+                type: 'post',
+                url: '/reserve',
+                dataType: 'json',
+                data: {
+                    phoneNum: userPhoneNum,
+                    id: houseID
+                },
+                success: function (data) {
+                    alert(data)
+                },
+                error: function (data) {
+                    console.log(data);
+                }
+            });
+        };
+
+        $(document).ready(function () {
+            var images = $('.image');
+            images[0].style.display = 'block';
+            var num = 0;
+
+            $('#turn_left').click(function () {
+                num--;
+                if (num < 0) {
+                    num = images.length - 1;
+                }
+                for (i = 0; i < images.length; i++) {
+                    images[i].style.display = 'none';
+                }
+                images[num].style.display = 'block';
+            });
+
+            $('#turn_right').click(function () {
+                num++;
+                if (num >= images.length) {
+                    num = 0;
+                }
+                for (i = 0; i < images.length; i++) {
+                    images[i].style.display = 'none';
+                }
+                images[num].style.display = 'block';
+            });
+        });
+    </script>
+</body>
+</html>
+{% endblock %}

@@ -1,0 +1,320 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>房源管理</title>
+    <script type="text/javascript" src="../static/scripts/jquery-1.10.2.js"></script>
+    <link rel="stylesheet" type="text/css" href="../static/content/bootstrap.css" />
+    <script type="text/javascript" src="../static/scripts/bootstrap.js"></script>
+</head>
+<body>
+    <div style="width:100%;height:35px;background-color:black;">
+        <div style="width:80%;height:100%;margin:auto;">
+            <div style="font-size:30px;font-weight:700;color:white;float:left;line-height:35px;">恋家</div>
+            <div style="font-size:20px;float:left;color:white;margin-left:20px;line-height:40px;">好屋租赁</div>
+            <div style="font-size:14px;float:left;color:white;margin-left:40px;line-height:40px;">
+                <a href="/manage_house" style="color:white;text-decoration: none;">房源管理</a>
+            </div>
+            <div style="font-size:14px;float:left;color:white;margin-left:20px;line-height:40px;">
+                <a href="/manage_userInfo" style="color:white;text-decoration: none;">用户管理</a>
+            </div>
+            <div style="font-size:14px;float:left;color:white;margin-left:20px;line-height:40px;">
+                <a href="/getReserve" style="color:white;text-decoration: none;">预约管理</a>
+            </div>
+            <div style="font-size:14px;float:left;color:white;margin-left:20px;line-height:40px;">
+                <a href="/getComplaint" style="color:white;text-decoration: none;">用户投诉</a>
+            </div>
+            <div style="float:right;color:white;margin-right:10%;line-height:35px;">
+                <a href="#" style="color:white; text-decoration: none;">{{session['username']}}</a>
+                <a href="/login" style="color:white; text-decoration: none; margin-left:10px">退出登录</a>
+            </div>
+        </div>
+    </div>
+
+    <div id="house" style="width:64%;background-color:white;height:auto; margin-left:15%;margin-top:20px;">
+        <div style="width:100%;height:60px;margin-top:4px;">
+            <button class="btn btn-primary" style="float:right;" data-toggle="modal" data-target="#add">添加房源</button>
+        </div>
+        {% for houseInfo in houseInfo_list %}
+        <div style="width:100%;height:100px;border-bottom:solid gray 1px;margin-top:4px;">
+            <div style="width:20%;height:100%;float:left;">
+                <img src="../static/images/{{houseInfo[0]}}/1.jpg" style="width:100%;height:100%;border-radius:5px;" />
+            </div>
+            <div style="width: 50%; height: 100%; float: left; ">
+                <div style="height:auto;margin-left:10%;"><h3>{{houseInfo[1]}}</h3></div>
+                <div style="height:auto;margin-left:10%;"><p4>{{houseInfo[3]}} / {{houseInfo[4]}} / {{houseInfo[5]}} / {{houseInfo[6]}}</p4></div>
+            </div>
+            <div style="width:20%;height:100%;float:left;">
+                <div style="height:auto;margin-left:10%;"><h2 style="color:red;">{{houseInfo[7]}}元/月</h2></div>
+            </div>
+            <div style="width:10%;height:100%;float:left;">
+                <button class="btn btn-info" style="width:80%;margin-top:10%;margin-left:10%;" data-toggle="modal" data-target="#modify" onclick="modifyHouse('{{houseInfo[0]}}')">修改</button>
+                <button class="btn btn-warning" style="width:80%;margin-top:10%;margin-left:10%;" onclick="removeHouse('{{houseInfo[0]}}')">下架</button>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <div class="modal fade" id="add" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog" style="width:50%;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title" id="myModalLabel">添加房源信息</h4>
+                </div>
+                <form action="/add_house" method="post" enctype="multipart/form-data">
+                    <div class="modal-body" style="width:50%;margin:auto;">
+                        <div class="input-group" style="padding-top:10px;">
+                            <span class="input-group-addon">&#12288;房源ID</span>
+                            <input id="id" name="id" type="text" class="form-control">
+                        </div>
+                        <div class="input-group" style="padding-top:10px;">
+                            <span class="input-group-addon">房源简介</span>
+                            <input id="info" name="info" type="text" class="form-control">
+                        </div>
+                        <div class="input-group" style="padding-top:10px;">
+                            <span class="input-group-addon">房源区域</span>
+                            <input id="area" name="area" type="text" class="form-control">
+                        </div>
+                        <div class="input-group" style="padding-top:10px;">
+                            <span class="input-group-addon">具体地址</span>
+                            <input id="location" name="location" type="text" class="form-control">
+                        </div>
+                        <div class="input-group" style="padding-top:10px;">
+                            <span class="input-group-addon">房屋面积</span>
+                            <input id="size" name="size" type="text" class="form-control">
+                        </div>
+                        <div class="input-group" style="padding-top:10px;">
+                            <span class="input-group-addon">房屋朝向</span>
+                            <input id="direction" name="direction" type="text" class="form-control">
+                        </div>
+                        <div class="input-group" style="padding-top:10px;">
+                            <span class="input-group-addon">几室几厅</span>
+                            <input id="rooms" name="rooms" type="text" class="form-control">
+                        </div>
+                        <div class="input-group" style="padding-top:10px;">
+                            <span class="input-group-addon">房屋价格</span>
+                            <input id="price" name="price" type="text" class="form-control">
+                        </div>
+                        <div class="input-group" style="padding-top:10px;">
+                            <span class="input-group-addon">出租方式</span>
+                            <select id="rent_way" name="rent_way" class="form-control">
+                                <option value="合租">合租</option>
+                                <option value="整租">整租</option>
+                            </select>
+                        </div>
+                        <div class="input-group" style="padding-top:10px;">
+                            <span class="input-group-addon">房屋型号</span>
+                            <input id="house_type" name="house_type" type="text" class="form-control">
+                        </div>
+                        <div class="input-group" style="padding-top:10px;">
+                            <span class="input-group-addon">方向楼层</span>
+                            <input id="direction_floor" name="direction_floor" type="text" class="form-control">
+                        </div>
+                        <div class="input-group" style="padding-top:10px;">
+                            <span class="input-group-addon">房屋楼层</span>
+                            <input id="floor" name="floor" type="text" class="form-control">
+                        </div>
+                        <div class="input-group" style="padding-top:10px;">
+                            <span class="input-group-addon">&#12288;&#12288;车位</span>
+                            <select id="parking" name="parking" class="form-control">
+                                <option value="有">有</option>
+                                <option value="无">无</option>
+                            </select>
+                        </div>
+                        <div class="input-group" style="padding-top:10px;">
+                            <span class="input-group-addon">&#12288;&#12288;用电</span>
+                            <select id="electricity" name="electricity" class="form-control">
+                                <option value="民电">民电</option>
+                                <option value="商电">商电</option>
+                            </select>
+                        </div>
+                        <div class="input-group" style="padding-top:10px;">
+                            <span class="input-group-addon">&#12288;&#12288;供暖</span>
+                            <select id="heating" name="heating" class="form-control">
+                                <option value="有">有</option>
+                                <option value="无">无</option>
+                            </select>
+                        </div>
+                        <div class="input-group" style="padding-top:10px;">
+                            <span class="input-group-addon">入住时间</span>
+                            <input id="check_in" name="check_in" type="text" class="form-control">
+                        </div>
+                        <div class="input-group" style="padding-top:10px;">
+                            <span class="input-group-addon">&#12288;&#12288;电梯</span>
+                            <select id="elevator" name="elevator" class="form-control">
+                                <option value="有">有</option>
+                                <option value="无">无</option>
+                            </select>
+                        </div>
+                        <div class="input-group" style="padding-top:10px;">
+                            <span class="input-group-addon">&#12288;&#12288;供水</span>
+                            <select id="water" name="water" class="form-control">
+                                <option value="有">有</option>
+                                <option value="无">无</option>
+                            </select>
+                        </div>
+                        <div class="input-group" style="padding-top:10px;">
+                            <span class="input-group-addon">&#12288;&#12288;供气</span>
+                            <select id="gas" name="gas" class="form-control">
+                                <option value="有">有</option>
+                                <option value="无">无</option>
+                            </select>
+                        </div>
+                        <div class="input-group" style="padding-top:10px;">
+                            <span class="input-group-addon">上传图片</span>
+                            <input id="pictures" name="pictures" type="file" multiple>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                        <button type="submit" class="btn btn-primary">确认添加</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="modify" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog" style="width:50%;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title" id="myModalLabel">修改房源信息</h4>
+                </div>
+                <form action="/modify_house" method="post" enctype="multipart/form-data">
+                    <div class="modal-body" style="width:50%;margin:auto;">
+                        <div class="input-group" style="padding-top:10px;">
+                            <span class="input-group-addon">&#12288;房源ID</span>
+                            <input id="id1" name="id" type="text" class="form-control">
+                        </div>
+                        <div class="input-group" style="padding-top:10px;">
+                            <span class="input-group-addon">房源简介</span>
+                            <input id="info1" name="info" type="text" class="form-control">
+                        </div>
+                        <div class="input-group" style="padding-top:10px;">
+                            <span class="input-group-addon">房源区域</span>
+                            <input id="area1" name="area" type="text" class="form-control">
+                        </div>
+                        <div class="input-group" style="padding-top:10px;">
+                            <span class="input-group-addon">具体地址</span>
+                            <input id="location1" name="location" type="text" class="form-control">
+                        </div>
+                        <div class="input-group" style="padding-top:10px;">
+                            <span class="input-group-addon">房屋面积</span>
+                            <input id="size1" name="size" type="text" class="form-control">
+                        </div>
+                        <div class="input-group" style="padding-top:10px;">
+                            <span class="input-group-addon">房屋朝向</span>
+                            <input id="direction1" name="direction" type="text" class="form-control">
+                        </div>
+                        <div class="input-group" style="padding-top:10px;">
+                            <span class="input-group-addon">几室几厅</span>
+                            <input id="rooms1" name="rooms" type="text" class="form-control">
+                        </div>
+                        <div class="input-group" style="padding-top:10px;">
+                            <span class="input-group-addon">房屋价格</span>
+                            <input id="price1" name="price" type="text" class="form-control">
+                        </div>
+                        <div class="input-group" style="padding-top:10px;">
+                            <span class="input-group-addon">出租方式</span>
+                            <input id="rent_way1" name="rent_way" type="text" class="form-control">
+                        </div>
+                        <div class="input-group" style="padding-top:10px;">
+                            <span class="input-group-addon">房屋型号</span>
+                            <input id="house_type1" name="house_type" type="text" class="form-control">
+                        </div>
+                        <div class="input-group" style="padding-top:10px;">
+                            <span class="input-group-addon">方向楼层</span>
+                            <input id="direction_floor1" name="direction_floor" type="text" class="form-control">
+                        </div>
+                        <div class="input-group" style="padding-top:10px;">
+                            <span class="input-group-addon">房屋楼层</span>
+                            <input id="floor1" name="floor" type="text" class="form-control">
+                        </div>
+                        <div class="input-group" style="padding-top:10px;">
+                            <span class="input-group-addon">&#12288;&#12288;车位</span>
+                            <input id="parking1" name="parking" type="text" class="form-control">
+                        </div>
+                        <div class="input-group" style="padding-top:10px;">
+                            <span class="input-group-addon">&#12288;&#12288;用电</span>
+                            <input id="electricity1" name="electricity" type="text" class="form-control">
+                        </div>
+                        <div class="input-group" style="padding-top:10px;">
+                            <span class="input-group-addon">&#12288;&#12288;供暖</span>
+                            <input id="heating1" name="heating" type="text" class="form-control">
+                        </div>
+                        <div class="input-group" style="padding-top:10px;">
+                            <span class="input-group-addon">入住时间</span>
+                            <input id="check_in1" name="check_in" type="text" class="form-control">
+                        </div>
+                        <div class="input-group" style="padding-top:10px;">
+                            <span class="input-group-addon">&#12288;&#12288;电梯</span>
+                            <input id="elevator1" name="elevator" type="text" class="form-control">
+                        </div>
+                        <div class="input-group" style="padding-top:10px;">
+                            <span class="input-group-addon">&#12288;&#12288;供水</span>
+                            <input id="water1" name="water" type="text" class="form-control">
+                        </div>
+                        <div class="input-group" style="padding-top:10px;">
+                            <span class="input-group-addon">&#12288;&#12288;供气</span>
+                            <input id="gas1" name="gas" type="text" class="form-control">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                        <button type="submit" class="btn btn-primary">确认修改</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div>
+        <form id="removeHouse" action="/remove_house" method="post">
+            <input type="hidden" id="houseID" name="houseID" />
+        </form>
+    </div> 
+    <script>
+        function modifyHouse(houseID) {
+            $.ajax({
+                type: 'post',
+                url: '/getHouseAllInfo',
+                dataType: 'json',
+                data: {
+                    id: houseID
+                },
+                success: function (data) {
+                    $('#id1').val(data[0]);
+                    $('#info1').val(data[1]);
+                    $('#area1').val(data[2]);
+                    $('#location1').val(data[3]);
+                    $('#size1').val(data[4]);
+                    $('#direction1').val(data[5]);
+                    $('#rooms1').val(data[6]);
+                    $('#price1').val(data[7]);
+                    $('#rent_way1').val(data[8]);
+                    $('#house_type1').val(data[9]);
+                    $('#direction_floor1').val(data[10]);
+                    $('#floor1').val(data[11]);
+                    $('#parking1').val(data[12]);
+                    $('#electricity1').val(data[13]);
+                    $('#heating1').val(data[14]);
+                    $('#check_in1').val(data[15]);
+                    $('#elevator1').val(data[16]);
+                    $('#water1').val(data[17]);
+                    $('#gas1').val(data[18]);
+                },
+                error: function (data) {
+                    console.log(data);
+                }
+            });
+        };
+
+        function removeHouse(houseID) {
+            if (confirm('确定要下架吗？')) {
+                $('#houseID').val(houseID);
+                $('#removeHouse').submit();
+            }
+        }
+    </script>
+</body>
+</html>

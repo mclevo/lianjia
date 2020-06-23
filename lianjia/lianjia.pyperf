@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<ProfilingTarget xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <ProjectTarget>
+    <TargetProject>143ebfa7-39d6-4e76-b5a9-02acce7e2643</TargetProject>
+    <FriendlyName>lianjia</FriendlyName>
+  </ProjectTarget>
+  <UseVTune>false</UseVTune>
+</ProfilingTarget>
